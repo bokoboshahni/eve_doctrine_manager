@@ -1,7 +1,9 @@
 require:
+  - rubocop-faker
   - rubocop-performance
   - rubocop-rails
   - rubocop-rake
+  - rubocop-rspec
   - rubocop-thread_safety
 
 AllCops:
