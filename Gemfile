@@ -17,6 +17,7 @@ gem 'pg', '~> 1.1'
 gem 'puma', '~> 5.0'
 gem 'rails', '~> 7.0.4'
 gem 'redis', '~> 4.0'
+gem "refinements", "~> 9.8"
 gem 'sprockets-rails', '~> 3.4'
 gem 'stimulus-rails', '~> 1.2'
 gem 'turbo-rails', '~> 1.3'
