@@ -5,6 +5,8 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '~> 3.1'
 
+gem 'dotenv-rails', '~> 2.8'
+
 gem 'bcrypt', '~> 3.1'
 gem 'bootsnap', '~> 1.15', require: false
 gem 'cssbundling-rails', '~> 1.1'
