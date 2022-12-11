@@ -38,9 +38,6 @@ end
 using Refinements::Pathnames
 Pathname.require_tree __dir__, 'support/shared_contexts/**/*.rb'
 
-FactoryBot.definition_file_paths = [Bundler.root.join('spec/factories')]
-FactoryBot.find_definitions
-
 RSpec.configure do |config|
   config.include ActiveSupport::Testing::TimeHelpers
   config.include FactoryBot::Syntax::Methods

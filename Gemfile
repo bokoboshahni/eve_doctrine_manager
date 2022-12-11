@@ -10,17 +10,21 @@ gem 'dotenv-rails', '~> 2.8'
 gem 'bcrypt', '~> 3.1'
 gem 'bootsnap', '~> 1.15', require: false
 gem 'cssbundling-rails', '~> 1.1'
+gem 'down', '~> 5.3', require: false
 gem 'jbuilder', '~> 2.11'
 gem 'jsbundling-rails', '~> 1.0'
 gem 'kredis', '~> 1.3'
+gem 'pastel', '~> 0.8.0', require: false
 gem 'pg', '~> 1.1'
 gem 'puma', '~> 5.0'
 gem 'rails', '~> 7.0.4'
 gem 'redis', '~> 4.0'
-gem "refinements", "~> 9.8"
+gem 'refinements', '~> 9.8'
 gem 'sprockets-rails', '~> 3.4'
 gem 'stimulus-rails', '~> 1.2'
-gem 'turbo-rails', '~> 1.3'
+gem 'tty-command', '~> 0.10', require: false
+gem 'tty-progressbar', '~> 0.18', require: false
+gem 'turbo-rails', '~> 1.3', require: false
 gem 'tzinfo-data', '~> 2.0', platforms: %i[mingw mswin x64_mingw jruby]
 
 group :development, :test do
