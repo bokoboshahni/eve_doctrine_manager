@@ -1,0 +1,21 @@
+{
+  "root": true,
+  "plugins": [
+    "prettier"
+  ],
+  "extends": [
+    "eslint:recommended",
+    "prettier"
+  ],
+  "parserOptions": {
+    "ecmaVersion": 2022,
+    "sourceType": "module"
+  },
+  "rules": {
+    "prefer-rest-params": "off",
+    "prettier/prettier": ["error"]
+  },
+  "env": {
+    "browser": true
+  }
+}

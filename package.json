@@ -1,0 +1,29 @@
+{
+  "name": "eve_doctrine_manager",
+  "private": "true",
+  "scripts": {
+    "clean": "rm -fr app/assets/builds",
+    "build": "rollup -c --bundleConfigAsCjs rollup.config.js",
+    "build:css": "tailwindcss -i ./app/assets/stylesheets/application.css -o ./app/assets/builds/application.css --minify",
+    "format": "yarn lint --fix",
+    "lint": "eslint . --ext .js",
+    "watch": "rollup -wc --bundleConfigAsCjs rollup.config.js"
+  },
+  "dependencies": {
+    "@hotwired/stimulus": "^3.2.1",
+    "@hotwired/turbo-rails": "^7.2.4",
+    "@rollup/plugin-node-resolve": "^15.0.1",
+    "autoprefixer": "^10.4.13",
+    "postcss": "^8.4.19",
+    "rollup": "^3.7.2",
+    "stimulus-dropdown": "^2.0.0",
+    "stimulus-reveal-controller": "^4.0.0",
+    "tailwindcss": "^3.2.4"
+  },
+  "devDependencies": {
+    "eslint": "^8.29.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "prettier": "^2.8.1"
+  }
+}
