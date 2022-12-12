@@ -9,10 +9,7 @@ class CreateItems < ActiveRecord::Migration[7.0]
     end
 
     create_table :item_groups do |t|
-      t.references :category,
-                   null: false,
-                   index: { name: :item_groups_category_id_idx },
-                   foreign_key: { name: :item_groups_category_id_fkey, to_table: :item_categories }
+      t.references :category, null: false
 
       t.text :name, null: false
       t.boolean :published, null: false
@@ -20,14 +17,11 @@ class CreateItems < ActiveRecord::Migration[7.0]
     end
 
     create_table :items do |t|
-      t.references :group,
-                   null: false,
-                   index: { name: :items_group_id_idx },
-                   foreign_key: { name: :item_group_id_fkey, to_table: :item_groups }
+      t.references :group, null: false
 
-      t.text :name, null: false
-      t.text :aliases, array: true
+      t.string :name, null: false
       t.boolean :published, null: false
+      t.string :slot
       t.timestamps null: false
     end
   end

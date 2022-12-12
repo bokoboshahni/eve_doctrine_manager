@@ -91,7 +91,7 @@ namespace :db do # rubocop:disable Metrics/BlockLength
 
         begin
           category_results = ItemCategory.upsert_all(@category_rows)
-          puts success.call("Imported #{category_results.count} categories")
+          puts success.call("Imported #{ItemCategory.count} categories")
         rescue StandardError => e
           puts error.call("Error importing categories: #{e.message}")
           raise
@@ -113,19 +113,38 @@ namespace :db do # rubocop:disable Metrics/BlockLength
 
         begin
           group_results = ItemGroup.upsert_all(@group_rows)
-          puts success.call("Imported #{group_results.count} groups")
+          puts success.call("Imported #{ItemGroup.count} groups")
         rescue StandardError => e
           puts error.call("Error importing groups: #{e.message}")
         end
 
         begin
           item_data = YAML.load_file(File.join(sde_path, 'fsd/typeIDs.yaml'))
+          dogma_data = YAML.load_file(File.join(sde_path, 'fsd/typeDogma.yaml'))
+
           @item_rows = item_data.each_with_object([]) do |(id, data), rows|
+            effects = dogma_data[id]&.fetch('dogmaEffects')
+            slot = if effects&.any? { |e| e['effectID'] == 11 }
+              slot = 'low'
+            elsif effects&.any? { |e| e['effectID'] == 13 }
+              slot = 'medium'
+            elsif effects&.any? { |e| e['effectID'] == 12 }
+              slot = 'high'
+            elsif effects&.any? { |e| e['effectID'] == 2663 }
+              slot = 'rig'
+            elsif effects&.any? { |e| e['effectID'] == 3772 }
+              slot = 'subsystem'
+            elsif effects&.any? { |e| e['effectID'] == 6306 }
+              slot = 'service'
+            else
+              nil
+            end
             rows << {
               id:,
               group_id: data['groupID'],
               name: data['name']['en'],
-              published: data['published']
+              published: data['published'],
+              slot: slot
             }
           end
         rescue StandardError => e
@@ -134,7 +153,7 @@ namespace :db do # rubocop:disable Metrics/BlockLength
 
         begin
           item_results = Item.upsert_all(@item_rows)
-          puts success.call("Imported #{item_results.count} items")
+          puts success.call("Imported #{Item.count} items")
         rescue StandardError => e
           puts error.call("Error importing items: #{e.message}")
         end

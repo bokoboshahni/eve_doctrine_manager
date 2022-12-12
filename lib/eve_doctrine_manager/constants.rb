@@ -48,4 +48,17 @@ module EVEDoctrineManager
     service_slot_7
   ].freeze
   # rubocop:enable Naming/VariableNumber
+
+  FITTING_SECTION_TYPES = %i[
+    low
+    med
+    high
+    drone_bay
+    rigs
+    sub_systems
+    fighter_bay
+    services
+    cargo
+    invalid
+  ]
 end

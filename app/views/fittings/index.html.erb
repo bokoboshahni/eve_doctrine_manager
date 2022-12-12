@@ -1,2 +1,66 @@
 <% title %>
 <% nav active: :fittings %>
+
+<% content_for(:actions) do %>
+  <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
+    <button type="button" class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white border border-transparent rounded-md shadow-sm bg-cyan-600 hover:bg-cyan-700 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 sm:w-auto">Add user</button>
+  </div>
+<% end %>
+
+<div class="mt-8 -mx-4 overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:-mx-6 md:mx-0 md:rounded-lg">
+  <table class="min-w-full divide-y divide-neutral-300">
+    <thead class="bg-neutral-50">
+      <tr>
+        <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-neutral-900 sm:pl-6">Name</th>
+        <th scope="col" class="hidden px-3 py-3.5 text-left text-sm font-semibold text-neutral-900 lg:table-cell">Ship/Citadel</th>
+        <th scope="col" class="hidden px-3 py-3.5 text-left text-sm font-semibold text-neutral-900 sm:table-cell">Status</th>
+        <th scope="col" class="hidden px-3 py-3.5 text-left text-sm font-semibold text-neutral-900 lg:table-cell">Updated</th>
+        <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6">
+          <span class="sr-only">Edit</span>
+        </th>
+      </tr>
+    </thead>
+    <tbody class="bg-white divide-y divide-neutral-200">
+      <% @fittings.each do |fitting| %>
+        <tr>
+          <td class="w-full py-4 pl-4 pr-3 text-sm font-medium max-w-0 text-neutral-900 sm:w-auto sm:max-w-none sm:pl-6">
+            <div class="flex items-center">
+              <div class="flex-shrink-0 w-10 h-10">
+                <img class="w-10 h-10 rounded-full" src="<%= item_icon_url(fitting.container) %>" alt="Icon for <%= fitting.container_name %>">
+              </div>
+              <div class="ml-4">
+                <div class="font-medium text-gray-900"><%= link_to fitting.fitting_name, fitting_path(fitting) %></div>
+              </div>
+            </div>
+            <dl class="font-normal lg:hidden">
+              <dt class="sr-only">Ship/Citadel</dt>
+              <dd class="mt-1 truncate text-neutral-700"><%= fitting.container_name %></dd>
+              <dt class="sr-only sm:hidden">Status</dt>
+              <dd class="mt-1 truncate text-neutral-500 sm:hidden">
+                <% if fitting.published? %>
+                  <span class="inline-flex px-2 text-xs font-semibold leading-5 text-green-800 bg-green-100 rounded-full">Published</span>
+                <% else %>
+                  <span class="inline-flex px-2 text-xs font-semibold leading-5 rounded-full bg-neutral-100 text-neutral-800">Unpublished</span>
+                <% end %>
+              </dd>
+            </dl>
+          </td>
+          <td class="hidden px-3 py-4 text-sm text-neutral-500 lg:table-cell"><%= fitting.container_name %></td>
+          <td class="hidden px-3 py-4 text-sm text-neutral-500 sm:table-cell">
+            <% if fitting.published? %>
+              <span class="inline-flex px-2 text-xs font-semibold leading-5 text-green-800 bg-green-100 rounded-full">Published</span>
+            <% else %>
+              <span class="inline-flex px-2 text-xs font-semibold leading-5 rounded-full bg-neutral-100 text-neutral-800">Unpublished</span>
+            <% end %>
+          </td>
+          <td class="hidden px-3 py-4 text-sm text-neutral-500 lg:table-cell">
+            <%= time_tag fitting.updated_at.to_date %>
+          </td>
+          <td class="py-4 pl-3 pr-4 text-sm font-medium text-right sm:pr-6">
+            <a href="#" class="text-cyan-600 hover:text-cyan-900">Edit<span class="sr-only">, Lindsay Walton</span></a>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

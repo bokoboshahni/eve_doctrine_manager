@@ -20,7 +20,9 @@ require 'action_cable/engine'
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
-module EveDoctrineManager
+require_relative '../lib/eve_doctrine_manager/constants'
+
+module EVEDoctrineManager
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.0

@@ -17,18 +17,20 @@
 
   <body class="h-full">
     <div class="min-h-full">
-      <div class="bg-neutral-800 pb-32">
+      <div class="pb-32 bg-neutral-800">
         <%= render 'application/top_nav' %>
         <%= render 'application/header' %>
       </div>
 
       <main class="-mt-32">
-        <div class="mx-auto max-w-7xl px-4 pb-12 sm:px-6 lg:px-8">
-          <!-- Replace with your content -->
-          <div class="rounded-lg bg-white px-5 py-6 shadow sm:px-6">
-            <div class="h-96 rounded-lg border-4 border-dashed border-neutral-200"></div>
-          </div>
-          <!-- /End replace -->
+        <div class="px-4 pb-12 mx-auto max-w-7xl sm:px-6 lg:px-8">
+          <% if content_for?(:main) %>
+            <div class="px-5 py-6 bg-white rounded-lg shadow sm:px-6">
+              <%= yield :main %>
+            </div>
+          <% else %>
+            <%= yield %>
+          <% end %>
         </div>
       </main>
     </div>

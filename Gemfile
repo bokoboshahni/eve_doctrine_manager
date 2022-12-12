@@ -7,6 +7,7 @@ ruby '~> 3.1'
 
 gem 'dotenv-rails', '~> 2.8'
 
+gem 'awesome_print', '~> 1.9'
 gem 'bcrypt', '~> 3.1'
 gem 'bootsnap', '~> 1.15', require: false
 gem 'cssbundling-rails', '~> 1.1'
@@ -15,8 +16,9 @@ gem 'heroicon', '~> 1.0'
 gem 'jbuilder', '~> 2.11'
 gem 'jsbundling-rails', '~> 1.0'
 gem 'kredis', '~> 1.3'
+gem "mysql2", "~> 0.5.4"
+gem "pry-rails", "~> 0.3.9"
 gem 'pastel', '~> 0.8.0', require: false
-gem 'pg', '~> 1.1'
 gem 'puma', '~> 5.0'
 gem 'rails', '~> 7.0.4'
 gem 'redis', '~> 4.0'
@@ -30,7 +32,6 @@ gem 'tzinfo-data', '~> 2.0', platforms: %i[mingw mswin x64_mingw jruby]
 gem 'view_component', '~> 2.78'
 
 group :development, :test do
-  gem 'awesome_print', '~> 1.9'
   gem 'debug', '~> 1.7', platforms: %i[mri mingw x64_mingw]
   gem 'factory_bot_rails', '~> 6.2'
   gem 'faker', '~> 3.0'

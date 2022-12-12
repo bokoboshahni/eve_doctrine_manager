@@ -10,36 +10,57 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_10_175233) do
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
+ActiveRecord::Schema[7.0].define(version: 2022_12_11_224804) do
+  create_table "fitting_items", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+    t.bigint "fitting_id", null: false
+    t.bigint "item_id", null: false
+    t.bigint "charge_id"
+    t.string "location"
+    t.boolean "offline"
+    t.integer "position", null: false
+    t.integer "quantity"
+    t.string "section"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["charge_id"], name: "index_fitting_items_on_charge_id"
+    t.index ["fitting_id"], name: "index_fitting_items_on_fitting_id"
+    t.index ["item_id"], name: "index_fitting_items_on_item_id"
+  end
 
-  create_table "item_categories", force: :cascade do |t|
+  create_table "fittings", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+    t.bigint "container_id"
+    t.text "description"
+    t.text "fitting_name", null: false
+    t.boolean "published"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["container_id", "fitting_name"], name: "index_fittings_on_container_id_and_fitting_name", unique: true, using: :hash
+  end
+
+  create_table "item_categories", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.text "name", null: false
     t.boolean "published", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "item_groups", force: :cascade do |t|
+  create_table "item_groups", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.bigint "category_id", null: false
     t.text "name", null: false
     t.boolean "published", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["category_id"], name: "item_groups_category_id_idx"
+    t.index ["category_id"], name: "index_item_groups_on_category_id"
   end
 
-  create_table "items", force: :cascade do |t|
+  create_table "items", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.bigint "group_id", null: false
-    t.text "name", null: false
-    t.text "aliases", array: true
+    t.string "name", null: false
     t.boolean "published", null: false
+    t.string "slot"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["group_id"], name: "items_group_id_idx"
+    t.index ["group_id"], name: "index_items_on_group_id"
   end
 
-  add_foreign_key "item_groups", "item_categories", column: "category_id", name: "item_groups_category_id_fkey"
-  add_foreign_key "items", "item_groups", column: "group_id", name: "item_group_id_fkey"
 end

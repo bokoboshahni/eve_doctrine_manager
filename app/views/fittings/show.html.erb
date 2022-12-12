@@ -1,0 +1,25 @@
+<% title @fitting.fitting_name %>
+<% nav active: :fittings %>
+
+<% content_for(:main) do %>
+  <div class="overflow-hidden bg-white">
+    <div class="px-4 py-5 sm:px-6">
+      <h3 class="text-lg font-medium leading-6 text-gray-900"><%= @fitting.container_name %></h3>
+      <p class="max-w-2xl mt-1 text-sm text-gray-500">
+        <% if @fitting.description.present? %>
+          <%= @fitting.description %>
+        <% else %>
+          No description
+        <% end %>
+      </p>
+    </div>
+    <div class="px-4 py-5 border-t border-gray-200 sm:p-0">
+      <div class="my-5 overflow-hidden bg-gray-50 sm:rounded-lg">
+        <div class="px-4 py-5 sm:p-6">
+          <pre><code><%= @fitting.to_eft %>
+          </code></pre>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
