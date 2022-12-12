@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_11_224804) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_12_203157) do
   create_table "fitting_items", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.bigint "fitting_id", null: false
     t.bigint "item_id", null: false
@@ -61,6 +61,22 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_11_224804) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["group_id"], name: "index_items_on_group_id"
+  end
+
+  create_table "users", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+    t.integer "alliance_id"
+    t.string "api_key"
+    t.integer "corporation_id"
+    t.boolean "admin"
+    t.boolean "manager"
+    t.integer "character_id", null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.text "name", null: false
+    t.integer "sign_in_count"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["character_id"], name: "index_users_on_character_id", unique: true
   end
 
 end

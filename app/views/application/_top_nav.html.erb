@@ -1,40 +1,44 @@
 <%
 links = {
-  dashboard: root_path,
-  fittings: fittings_path,
-  doctrines: doctrines_path,
-  api: api_path,
-  users: users_path
+  dashboard: { href: root_path },
+  fittings: { href: fittings_path },
+  doctrines: { href: doctrines_path },
+  api: { href: api_path },
+  users: { href: users_path, admin: true }
 }
 %>
 <nav class="bg-neutral-800" data-controller="reveal">
   <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
     <div class="border-b border-neutral-700">
-      <div class="flex h-16 items-center justify-between px-4 sm:px-0">
+      <div class="flex items-center justify-between h-16 px-4 sm:px-0">
         <div class="flex items-center">
           <div class="flex-shrink-0">
-            <img class="h-8 w-8" src="https://tailwindui.com/img/logos/mark.svg?color=cyan&shade=500" alt="EVE Doctrine Manager">
+            <img class="w-8 h-8" src="https://tailwindui.com/img/logos/mark.svg?color=cyan&shade=500" alt="EVE Doctrine Manager">
           </div>
-          <div class="hidden md:block">
-            <div class="ml-10 flex items-baseline space-x-4">
-              <% links.each do |key, href| %>
-                <% if active_nav?(key) %>
-                  <%= link_to t(".links.#{key}"), href, class: 'bg-neutral-900 text-white px-3 py-2 rounded-md text-sm font-medium', aria: { current: :page } %>
-                <% else %>
-                  <%= link_to t(".links.#{key}"), href, class: 'text-neutral-300 hover:bg-neutral-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium' %>
+          <% if user_logged_in? %>
+            <div class="hidden md:block">
+              <div class="flex items-baseline ml-10 space-x-4">
+                <% links.each do |key, link| %>
+                  <% next if link[:admin] && !current_user.admin? %>
+
+                  <% if active_nav?(key) %>
+                    <%= link_to t(".links.#{key}"), link[:href], class: 'bg-neutral-900 text-white px-3 py-2 rounded-md text-sm font-medium', aria: { current: :page } %>
+                  <% else %>
+                    <%= link_to t(".links.#{key}"), link[:href], class: 'text-neutral-300 hover:bg-neutral-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium' %>
+                  <% end %>
                 <% end %>
-              <% end %>
+              </div>
             </div>
-          </div>
+          <% end %>
         </div>
         <div class="hidden md:block">
-          <div class="ml-4 flex items-center md:ml-6">
+          <div class="flex items-center ml-4 md:ml-6">
             <%= render 'application/user_menu' %>
           </div>
         </div>
-        <div class="-mr-2 flex md:hidden">
+        <div class="flex -mr-2 md:hidden">
           <!-- Mobile menu button -->
-          <button type="button" class="inline-flex items-center justify-center rounded-md bg-neutral-800 p-2 text-neutral-400 hover:bg-neutral-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-neutral-800" aria-controls="mobile-menu" aria-expanded="false"
+          <button type="button" class="inline-flex items-center justify-center p-2 rounded-md bg-neutral-800 text-neutral-400 hover:bg-neutral-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-neutral-800" aria-controls="mobile-menu" aria-expanded="false"
             data-action="click->reveal#toggle"
           >
             <span class="sr-only">Open main menu</span>
@@ -46,28 +50,43 @@ links = {
   </div>
 
   <div class="hidden border-b border-neutral-700 md:hidden" id="mobile-menu" data-reveal-target="item">
-    <div class="space-y-1 px-2 py-3 sm:px-3">
-      <% links.each do |key, href| %>
-        <% if active_nav?(key) %>
-          <%= link_to t(".links.#{key}"), href, class: 'bg-neutral-900 text-white block px-3 py-2 rounded-md text-base font-medium', aria: { current: :page } %>
-        <% else %>
-          <%= link_to t(".links.#{key}"), href, class: 'text-neutral-300 hover:bg-neutral-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium' %>
+    <% if user_logged_in? %>
+      <div class="px-2 py-3 space-y-1 sm:px-3">
+        <% links.each do |key, link| %>
+          <% next if link[:admin] && !current_user.admin? %>
+
+          <% if active_nav?(key) %>
+            <%= link_to t(".links.#{key}"), link[:href], class: 'bg-neutral-900 text-white block px-3 py-2 rounded-md text-base font-medium', aria: { current: :page } %>
+          <% else %>
+            <%= link_to t(".links.#{key}"), link[:href], class: 'text-neutral-300 hover:bg-neutral-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium' %>
+          <% end %>
+        <% end %>
+      </div>
+    <% end %>
+    <div class="pt-4 pb-3 border-t border-neutral-700">
+      <% if user_logged_in? %>
+        <div class="flex items-center px-5">
+          <div class="flex-shrink-0">
+            <%= image_tag current_user.avatar_url, class: 'h-10 w-10 rounded-full', alt: "Avatar for #{current_user.name}" %>
+          </div>
+          <div class="ml-3">
+            <div class="text-base font-medium leading-none text-white"><%= current_user.name %></div>
+          </div>
+        </div>
+        <div class="px-2 mt-3 space-y-1">
+          <%= button_to 'Log out', destroy_user_session_path, class: 'block px-4 py-2 text-sm text-neutral-700', method: :delete, role: 'menuitem', tabindex: '-1', data: { turbo: false } %>
+        </div>
+      <% else %>
+        <%= button_to user_eve_omniauth_authorize_path, data: { turbo: false } do %>
+          <div class="flex items-center px-5">
+            <div class="flex-shrink-0">
+              <%= button_to user_eve_omniauth_authorize_path, data: { turbo: false } do %>
+                <%= image_tag('eve-sso-login-black-small.png') %>
+              <% end %>
+            </div>
+          </div>
         <% end %>
       <% end %>
-    </div>
-    <div class="border-t border-neutral-700 pt-4 pb-3">
-      <div class="flex items-center px-5">
-        <div class="flex-shrink-0">
-          <img class="h-10 w-10 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
-        </div>
-        <div class="ml-3">
-          <div class="text-base font-medium leading-none text-white">Tom Cook</div>
-          <div class="text-sm font-medium leading-none text-neutral-400">tom@example.com</div>
-        </div>
-      </div>
-      <div class="mt-3 space-y-1 px-2">
-        <a href="#" class="block rounded-md px-3 py-2 text-base font-medium text-neutral-400 hover:bg-neutral-700 hover:text-white">Sign out</a>
-      </div>
     </div>
   </div>
 </nav>

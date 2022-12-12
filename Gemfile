@@ -11,12 +11,15 @@ gem 'awesome_print', '~> 1.9'
 gem 'bcrypt', '~> 3.1'
 gem 'bootsnap', '~> 1.15', require: false
 gem 'cssbundling-rails', '~> 1.1'
+gem 'devise', '~> 4.8'
 gem 'down', '~> 5.3', require: false
 gem 'heroicon', '~> 1.0'
 gem 'jbuilder', '~> 2.11'
 gem 'jsbundling-rails', '~> 1.0'
 gem 'kredis', '~> 1.3'
 gem "mysql2", "~> 0.5.4"
+gem 'omniauth-eve_online', github: 'bokoboshahni/omniauth-eve_online'
+gem 'omniauth-rails_csrf_protection', '~> 1.0'
 gem "pry-rails", "~> 0.3.9"
 gem 'pastel', '~> 0.8.0', require: false
 gem 'puma', '~> 5.0'
@@ -56,3 +59,5 @@ group :test do
   gem 'vcr', '~> 6.1', require: false
   gem 'webmock', '~> 3.18', require: false
 end
+
+gem "httpx", "~> 0.21.1"

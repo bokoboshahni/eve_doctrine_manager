@@ -17,4 +17,5 @@ ActiveSupport::Inflector.inflections(:en) do |inflect|
   inflect.acronym 'API'
   inflect.acronym 'EFT'
   inflect.acronym 'EVE'
+  inflect.acronym 'SSO'
 end
